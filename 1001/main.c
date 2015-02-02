@@ -6,6 +6,7 @@
 char i2cnum(int i)
 {
 	char c = (char)(i+0x30);
+	return c;
 
 }
 // 字符转化成整形
@@ -46,25 +47,15 @@ void myStripZeros(char* s)
 	{
 		s[0]='0';
 		s[1]=0;
+		return ;
 	}
 	//删除前面的0
-	int i =0 ;
-	while (s[i]!=0)
+	while (s[0]=='0')
 	{
-		if(s[i] == '0')
-		{
-			//printf("strip1");
-			deleteindex(s,i);	
-		}
-		else
-		{
-			//printf("strip2");
-			i++;
-		}
+		deleteindex(s,0);	
 	}
-	//printf("%s\n",s);
 	//删除后面的0
-	int j =i-1 ;
+	int j =strlen(s)-1 ;
 	//int j=strlen(s)-1;
 	while (s[j]=='0')
 	{
@@ -75,6 +66,7 @@ void myStripZeros(char* s)
 	//int j = strlen(s);
 	//printf("%s\n",s);
 	//删除最后的小数u
+	j=strlen(s)-1;
 	if(s[j]=='.')
 		deleteindex(s,j);
 	// 如果全部字符都被删除了，则为0
@@ -84,6 +76,35 @@ void myStripZeros(char* s)
 		s[1]=0;
 	}
 }
+
+void myStripStartZeros(char* s)
+{
+	if(strlen(s)==0)
+	{
+		s[0]='0';
+		s[1]=0;
+		return ;
+	}
+	if(isAllZero(s))
+	{
+		s[0]='0';
+		s[1]=0;
+		return ;
+	}
+	//删除前面的0
+	while (s[0]=='0')
+	{
+		deleteindex(s,0);	
+	}
+	// 如果全部字符都被删除了，则为0
+	if(s[0]==0)
+	{
+		s[0]='0';
+		s[1]=0;
+	}
+
+}
+
 
 void testPrint(char a[1000][10],int* b,int num)
 {
@@ -96,7 +117,7 @@ void testPrint(char a[1000][10],int* b,int num)
 
 // n1乘以n2的补weight个0存入r 中
 // 注字符要先转成数值
-char *mulRealDigit(char *n1,int n2,int weight,char *r)
+void mulRealDigit(char *n1,int n2,int weight,char *r)
 {
 	int carry = 0;
 	int value = 0;
@@ -137,11 +158,10 @@ char *mulRealDigit(char *n1,int n2,int weight,char *r)
 		r[j+k]='0';
 	}
 	r[j+k]='\0';
-		
 }
 
 // n1+n2的结果存入r中
-char *addRealReal(char *n1,char* n2,char* r)
+void addRealReal(char *n1,char* n2,char* r)
 {
 	int value = 0;
 	int carry = 0;
@@ -202,7 +222,7 @@ int countAfterPointNum(char* n)
 			break;
 		}
 	}
-	return (strlen(n)-i+1);
+	return (strlen(n)-i-1);
 
 }
 
@@ -219,19 +239,19 @@ void removeDecPoint(char * s)
 }
 
 // 在某个索引之前插入字符
-void insertBeforeIndex(char* s,int i)
+void insertBeforeIndex(char* s,char c ,int i)
 {
 	int j=strlen(s);
 	for(;j>=i;--j)
 	{
 		s[j+1]=s[j];
 	}
-	s[j+1]='.';
+	s[j+1]=c;
 }
 
 void mulRealReal(char *n1,char* n2,char *r)
 {
-	int AfterPointNum = countAfterPointNum(n1)+countAfterPointNum(n2);
+	int AfterPointNum = countAfterPointNum(n1)+countAfterPointNum(n2);//表示小数点后的位数
 	removeDecPoint(n1);
 	removeDecPoint(n2);
 	char *sum = new char[1000];
@@ -247,14 +267,25 @@ void mulRealReal(char *n1,char* n2,char *r)
 	}
 	mulRealDigit(n1,cnum2i(n2[digitIndex]),digitWeight,r1);
 	addRealReal(sum,r1,sum);
-	// 下面恢复小数点
+	
+	// 上面都是整数运算，下面恢复小数点，恢复之前要把前面的0删除
+	myStripStartZeros(sum);
 	if(AfterPointNum ==0)
 	{
 		memcpy(r,sum,1000);
 		return ;
 	}
-	int insertIndex = strlen(sum)-AfterPointNum;
-	insertBeforeIndex(sum,insertIndex);
+	int insertIndex = strlen(sum)-AfterPointNum;//这里有可能减到负数的?
+	// 负数先补0再插入.
+	if(insertIndex<0)
+	{
+		for(int addZeroCount = 0;addZeroCount<(-insertIndex);++addZeroCount)
+		{
+			insertBeforeIndex(sum,'0',0);
+		}
+		insertIndex = strlen(sum)-AfterPointNum;
+	}
+	insertBeforeIndex(sum,'.',insertIndex);
 	memcpy(r,sum,1000);
 	return ;
 }
@@ -283,7 +314,7 @@ int main(int argc,char** argv)
 			break;
 		i++;
 	}
-	testPrint(Bot,Pow,i);
+	//testPrint(Bot,Pow,i);
 	//printf("input finish!");
 	for(size_t j = 0;j<i;++j)
 	{
