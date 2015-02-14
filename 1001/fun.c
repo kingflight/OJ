@@ -40,6 +40,16 @@ bool isAllZero(char* s)
    return true;
 }
 
+bool HasDecPoint(char* s)
+{
+	for(int i =0 ;i<strlen(s);++i)
+	{
+		if(s[i]='.')
+			return true;
+	}
+	return false;
+}
+
 void myStripZeros(char* s)
 {
 	if(isAllZero(s))
@@ -49,36 +59,25 @@ void myStripZeros(char* s)
 	}
 	//删除前面的0
 	int i =0 ;
-	while (s[i]!=0)
+	while (s[i]=='0')
 	{
-		if(s[i] == '0')
-		{
-			//printf("strip2");
-			deleteindex(s,i);	
-		}
-		else
-		{
-			//printf("strip2");
-			i++;
-		}
-	}
-	//printf("%s\n",s);
-	//删除后面的0
-	int j =i-1 ;
-	//int j=strlen(s)-1;
-	while (s[j]=='0')
-	{
-		deleteindex(s,j);	
-		j--;
+		deleteindex(s,i);	
 	}
 
-	//int j = strlen(s);
-	//printf("%s\n",s);
-	//删除最后的小数u
-	if(s[j]=='.')
-		deleteindex(s,j);
-	// 如果全部字符都被删除了，则为0
-	if(s[0]==0)
+	if(HasDecPoint(s))
+	{
+		//printf("%s\n",s);
+		//删除后面的0
+		//int j =i-1 ;
+		int j=strlen(s)-1;
+		while (s[j]=='0')
+		{
+			deleteindex(s,j);	
+			j--;
+		}
+	}
+	// if all left is a dec point 
+	if(s[0]=='.'&&s[1]=='\0')
 	{
 		s[0]='0';
 		s[1]=0;
@@ -192,17 +191,22 @@ char *addRealReal(char *n1,char* n2,char* r)
 }
 
 // 返回n中小数点后有几个数字
-int countAfterPointNum(char* n)
+int countAfterPointNum(const char* n)
 {
 	int i=0;
+	bool bfound = false;
 	for(;i<strlen(n);++i)
 	{
 		if(n[i]=='.')
 		{
+			bfound = true;
 			break;
 		}
 	}
-	return (strlen(n)-i+1);
+	if(!bfound)
+		return 0;
+	
+	return (strlen(n)-i-1);
 
 }
 

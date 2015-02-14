@@ -17,7 +17,7 @@ int main(int argc,char** argv)
 			break;
 		i++;
 	}
-	testPrint(Bot,Pow,i);
+	//testPrint(Bot,Pow,i);
 	//printf("input finish!");
 	for(size_t j = 0;j<i;++j)
 	{
