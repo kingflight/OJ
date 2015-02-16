@@ -78,6 +78,14 @@ TEST(HasDecPoint,one)
 	EXPECT_FALSE(HasDecPoint(s1));
 }
 
+TEST(insertMultiCharAtBegin,one)
+{
+	char s[50] = "234";
+	char s_r[50] = "00000234";
+	insertMultiCharAtBegin(s,5,'0');
+	EXPECT_STREQ(s,s_r);
+}
+
 int main(int argc ,char** argv)
 {
 	testing::InitGoogleTest(&argc,argv);

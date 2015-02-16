@@ -233,6 +233,19 @@ void insertBeforeIndex(char* s,int i)
 	s[j+1]='.';
 }
 
+void insertMultiCharAtBegin(char* s,int n ,char c)
+{
+	int i = strlen(s);
+	for(;i!=0;--i)
+	{
+		s[i+n]=s[i];
+	}
+	s[i+n]=s[i];
+	for(int j =0;j<n;++j)
+	{
+		s[j] = c;
+	}
+}
 void mulRealReal(char *n1,char* n2,char *r)
 {
 	int AfterPointNum = countAfterPointNum(n1)+countAfterPointNum(n2);
@@ -258,6 +271,10 @@ void mulRealReal(char *n1,char* n2,char *r)
 		return ;
 	}
 	int insertIndex = strlen(sum)-AfterPointNum;
+	if(insertIndex<0)
+	{
+		insertMultiCharAtBegin(sum,1-insertIndex,'0');
+	}
 	insertBeforeIndex(sum,insertIndex);
 	memcpy(r,sum,1000);
 	return ;
