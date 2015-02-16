@@ -5,13 +5,13 @@
 
 char i2cnum(int i)
 {
-	char c = (char)(i+0x30);
-
+	return (char)(i+0x30);
 }
+
 // 字符转化成整形
 int cnum2i(char c)
 {
-	return (int)(c-0x30);
+	return (int)((int)c-0x30);
 }
 
 void deleteindex(char *s,int index )
@@ -26,7 +26,7 @@ void deleteindex(char *s,int index )
 	s[i-1]=s[i];
 }
 
-bool isAllZero(char* s)
+bool isAllZero(const char* s)
 {
    int i =0 ;
    while(s[i]!=0)
@@ -44,7 +44,7 @@ bool HasDecPoint(char* s)
 {
 	for(int i =0 ;i<strlen(s);++i)
 	{
-		if(s[i]='.')
+		if(s[i]=='.')
 			return true;
 	}
 	return false;
@@ -95,7 +95,7 @@ void testPrint(char a[1000][10],int* b,int num)
 
 // n1乘以n2的补weight个0存入r 中
 // 注字符要先转成数值
-char *mulRealDigit(char *n1,int n2,int weight,char *r)
+void mulRealDigit(char *n1,int n2,int weight,char *r)
 {
 	int carry = 0;
 	int value = 0;
@@ -140,7 +140,7 @@ char *mulRealDigit(char *n1,int n2,int weight,char *r)
 }
 
 // n1+n2的结果存入r中
-char *addRealReal(char *n1,char* n2,char* r)
+void addRealReal(char *n1,char* n2,char* r)
 {
 	int value = 0;
 	int carry = 0;

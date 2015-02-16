@@ -6,3 +6,4 @@ all:
 	g++ -g -I. -o mul.out main.c 
 unittest:
 	g++ -g -L$(GTEST_LIB_DIR) -lgtest -lpthread -I. -I$(GTEST_INCLUDE_DIR) -o test.out testfun.c
+	./test.out
