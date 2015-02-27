@@ -86,6 +86,18 @@ TEST(insertMultiCharAtBegin,one)
 	EXPECT_STREQ(s,s_r);
 }
 
+TEST(mulRealReal,one)
+{
+	char s1[1000]="0.123";
+	char s2[1000]="0.123";
+	char r1[1000]={0};
+	mulRealReal(s1,s2,r1);
+	EXPECT_STREQ(r1,"0.015129");
+	char r2[1000]={0};
+	mulRealReal(r1,s1,r2);
+	EXPECT_STREQ(r2,"0.001860867");
+}
+
 int main(int argc ,char** argv)
 {
 	testing::InitGoogleTest(&argc,argv);

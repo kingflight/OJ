@@ -106,14 +106,14 @@ void mulRealDigit(char *n1,int n2,int weight,char *r)
 		int digit = cnum2i(n1[i]);
 		int product = n2 * digit + carry;
 		value = product % 10;
-		sum[i]=value+carry;
+		sum[i]=value;
 		carry = product /10;
 	}
 	int digit = cnum2i(n1[i]);
 	int product = n2 * digit + carry;
-	value = product % 10;
-	sum[i]=value+carry;
+	value = (product) % 10;
 	carry = product /10;
+	sum[i]=value;
 	//输出结果
 	int j = 0;
 	if(carry != 0)
