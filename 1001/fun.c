@@ -246,12 +246,19 @@ void insertMultiCharAtBegin(char* s,int n ,char c)
 		s[j] = c;
 	}
 }
-void mulRealReal(char *n1,char* n2,char *r)
+void mulRealReal(char *pn1,char* pn2,char *r)
 {
+	char n1[1000]= {0};
+	char n2[1000]= {0};
+	strcpy(n1,pn1);
+	strcpy(n2,pn2);
 	int AfterPointNum = countAfterPointNum(n1)+countAfterPointNum(n2);
+	//memcpy(n1,pn1,strlen(pn1)+1);
+	//memcpy(n2,pn2,strlen(pn2)+1);
+
 	removeDecPoint(n1);
 	removeDecPoint(n2);
-	char *sum = new char[1000];
+	char sum[1000]= {0};
 	sum[0] = '0';
 	sum[1] = '\0';
 	char r1[1000] = "0"; //保存中间结果
