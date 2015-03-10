@@ -118,7 +118,7 @@ void mulRealDigit(char *n1,int n2,int weight,char *r)
 	int j = 0;
 	if(carry != 0)
 	{
-		r[0]=carry;
+		r[0]=i2cnum(carry);
 		j = 1;
 	}
 	else
@@ -153,8 +153,8 @@ void addRealReal(char *n1,char* n2,char* r)
 	do
 	{
 		--i;--i1;--i2;
-		int isum = cnum2i(n1[i1])+cnum2i(n2[i2]);
-		value = isum%10 + carry;
+		int isum = cnum2i(n1[i1])+cnum2i(n2[i2])+ carry;
+		value = isum%10 ;
 		sum[i3] = value;
 		carry = isum/10;
 		++i3;
@@ -177,7 +177,7 @@ void addRealReal(char *n1,char* n2,char* r)
 	int ir = 0;
 	if(carry!=0)
 	{
-		r[ir]=carry;
+		r[ir]=i2cnum(carry);
 		++ir;
 	}
 	do
