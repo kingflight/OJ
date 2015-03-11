@@ -37,6 +37,11 @@ TEST(myStrip,one)
 	char s4_r[100]="300";
 	myStripZeros(s4);	
 	EXPECT_STREQ(s4,s4_r);
+	
+	char s5[100]="00300.";
+	char s5_r[100]="300";
+	myStripZeros(s5);	
+	EXPECT_STREQ(s5,s5_r);
 }
 
 TEST(isAllZero,one)

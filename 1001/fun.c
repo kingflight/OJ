@@ -75,9 +75,14 @@ void myStripZeros(char* s)
 			deleteindex(s,j);	
 			j--;
 		}
+		if(s[j]=='.')
+		{
+			deleteindex(s,j);
+			j--;
+		}
 	}
 	// if all left is a dec point 
-	if(s[0]=='.'&&s[1]=='\0')
+	if((s[0]=='.'&&s[1]=='\0')||(s[0]==0))
 	{
 		s[0]='0';
 		s[1]=0;
